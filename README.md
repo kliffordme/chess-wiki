@@ -1,54 +1,30 @@
-# React + TypeScript + Vite
+# ♟️ Chess Wiki – Player Profile Viewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean, responsive React + TypeScript app that fetches and displays Chess.com grandmaster profiles, including live "time since last online" tracking.
 
-Currently, two official plugins are available:
+🎯 **Demo features**:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Paginated list of grandmaster usernames (client-only, uses Chess.com API)
+- Clickable cards to view player details with responsive layout
+- Live timer showing how long since last online in `HH:MM:SS`
+- Back button preserving pagination state via `?page=` query
+- Full responsive support (cards wrap, mobile‑friendly)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Quick Start
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+```bash
+# Clone repo
+git clone https://github.com/kliffordme/chess-wiki.git
+cd chess-wiki
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Install dependencies
+npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Set environment variables
+echo "VITE_CHESS_API_BASE=https://api.chess.com/pub" > .env
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# Run in development mode
+npm run dev
 ```
