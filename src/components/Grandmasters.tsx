@@ -12,7 +12,7 @@ const Container = styled.div`
   border-radius: 20px;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
   color: #ffce54;
   margin-bottom: 2rem;
   text-align: center;
@@ -165,7 +165,7 @@ const Grandmasters = () => {
   };
   return (
     <Container>
-      <Title>♟️ List of Grandmasters</Title>
+      <Title>♟️ Grandmasters</Title>
       {loading ? (
         <SkeletonSearchInput />
       ) : (
