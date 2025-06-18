@@ -101,24 +101,31 @@ const Grandmasters = () => {
     <Container>
       <Title>♟️ List of Grandmasters</Title>
       {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <Grid>
-            {currentItems.map((gm) => (
-              <Card key={gm} onClick={() => handleClick(gm)}>
-                <PlaceholderAvatar>{gm[0].toUpperCase()}</PlaceholderAvatar>
-                <h4>{gm}</h4>
-              </Card>
-            ))}
-          </Grid>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </>
-      )}
+      <Grid>
+        {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+          <Card key={i} style={{ backgroundColor: '#2a2a2a', animation: 'pulse 1.5s infinite' }}>
+            <PlaceholderAvatar style={{ backgroundColor: '#555' }} />
+            <h4 style={{ backgroundColor: '#333', width: '60%', height: '1rem', margin: '0.6rem auto 0', borderRadius: '4px' }} />
+          </Card>
+        ))}
+      </Grid>
+    ) : (
+      <>
+        <Grid>
+          {currentItems.map((gm) => (
+            <Card key={gm} onClick={() => handleClick(gm)}>
+              <PlaceholderAvatar>{gm[0].toUpperCase()}</PlaceholderAvatar>
+              <h4>{gm}</h4>
+            </Card>
+          ))}
+        </Grid>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </>
+    )}
     </Container>
   );
 };

@@ -167,7 +167,52 @@ const formatTime = (seconds: number) => {
     fetchProfile();
   }, [username]);
 
-  if (loading) return <Container><p>Loading...</p></Container>;
+  if (loading) return (
+  <Container>
+      <Card style={{ animation: 'pulse 1.5s ease-in-out infinite' }}>
+        <Header>
+          <Avatar
+            src=""
+            style={{
+              backgroundColor: '#333',
+              border: 'none',
+              width: '160px',
+              height: '160px',
+            }}
+          />
+          <UsernameBlock>
+            <div style={{ backgroundColor: '#333', height: '2rem', width: '60%', borderRadius: '6px' }} />
+            <div style={{ backgroundColor: '#333', height: '1.2rem', width: '40%', marginTop: '0.5rem', borderRadius: '4px' }} />
+          </UsernameBlock>
+        </Header>
+
+        <Section>
+          <SectionTitle>Player Info</SectionTitle>
+          <InfoList>
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <InfoItem key={idx}>
+                <strong style={{ backgroundColor: '#333', width: '120px', height: '1rem', borderRadius: '4px' }} />
+                <span style={{ backgroundColor: '#222', width: '100px', height: '1rem', marginLeft: '1rem', borderRadius: '4px' }} />
+              </InfoItem>
+            ))}
+          </InfoList>
+        </Section>
+
+        <Section>
+          <SectionTitle>Activity</SectionTitle>
+          <InfoList>
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <InfoItem key={idx}>
+                <strong style={{ backgroundColor: '#333', width: '120px', height: '1rem', borderRadius: '4px' }} />
+                <span style={{ backgroundColor: '#222', width: '120px', height: '1rem', marginLeft: '1rem', borderRadius: '4px' }} />
+              </InfoItem>
+            ))}
+          </InfoList>
+        </Section>
+      </Card>
+    </Container>
+  );
+
   if (!profile) return <Container><p>Player not found.</p></Container>;
 
   return (
