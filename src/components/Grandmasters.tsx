@@ -35,14 +35,19 @@ const Card = styled.div`
   transition: transform 0.2s ease, background-color 0.2s ease;
   height: 160px; 
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   &:hover {
     background-color: #292929;
     transform: translateY(-4px);
   }
 
   h4 {
-    margin: 0.6rem 0 0;
-    font-size: 1rem;
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
     color: #ffce54;
     word-break: break-word;
   }
@@ -102,6 +107,10 @@ const SkeletonSearchInput = styled.div`
   }
 `;
 
+const AvatarWrapper = styled.div`
+  margin-bottom: 0.4rem;
+`;
+
 
 const Grandmasters = () => {
   const [gms, setGMs] = useState<string[]>([]);
@@ -117,7 +126,17 @@ const Grandmasters = () => {
     const fetchGMs = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_CHESS_API_BASE}/titled/GM`);
-        setGMs(response.data.players);
+
+        const sorted = response.data.players.sort((a: string, b: string) => {
+        const aIsNum = /^\d/.test(a);
+        const bIsNum = /^\d/.test(b);
+
+        if (aIsNum && !bIsNum) return 1;
+        if (!aIsNum && bIsNum) return -1;
+        return a.localeCompare(b);
+      });
+
+      setGMs(sorted);
       } catch (error) {
         console.error('Failed to fetch GMs:', error);
       } finally {
@@ -174,7 +193,9 @@ const Grandmasters = () => {
         <Grid>
           {currentItems.map((gm) => (
             <Card key={gm} onClick={() => handleClick(gm)}>
-              <PlaceholderAvatar>{gm[0].toUpperCase()}</PlaceholderAvatar>
+              <AvatarWrapper>
+                <PlaceholderAvatar>{gm[0].toUpperCase()}</PlaceholderAvatar>
+              </AvatarWrapper>
               <h4>{gm}</h4>
             </Card>
           ))}
