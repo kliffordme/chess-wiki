@@ -16,7 +16,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    background-image: url('/chess-bg.jpg'); /* make sure the image is in the public folder */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
     margin: 0;
+    padding: 0;
     display: flex;
     place-items: center;
     min-width: 320px;
