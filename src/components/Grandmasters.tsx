@@ -9,6 +9,7 @@ const Container = styled.div`
   background-color: #111;
   color: #eee;
   min-height: 100vh;
+  border-radius: 20px;
 `;
 
 const Title = styled.h2`
