@@ -61,6 +61,47 @@ const PlaceholderAvatar = styled.div`
   font-size: 0.9rem;
 `;
 
+const SearchInput = styled.input`
+  width: 100%;
+  max-width: 400px;
+  padding: 0.6rem 1rem;
+  margin: 0 auto 2rem;
+  display: block;
+  background-color: #1a1a1a;
+  color: #eee;
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+    border-color: #ffce54;
+  }
+`;
+
+const SkeletonSearchInput = styled.div`
+  width: 100%;
+  max-width: 400px;
+  height: 42px;
+  margin: 0 auto 2rem;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  animation: pulse 1.5s infinite;
+
+  @keyframes pulse {
+    0% {
+      background-color: #2a2a2a;
+    }
+    50% {
+      background-color: #3a3a3a;
+    }
+    100% {
+      background-color: #2a2a2a;
+    }
+  }
+`;
+
+
 const Grandmasters = () => {
   const [gms, setGMs] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -69,6 +110,7 @@ const Grandmasters = () => {
   const pageParam = parseInt(searchParams.get('page') || '1', 10);
   const [currentPage, setCurrentPage] = useState(pageParam);
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchGMs = async () => {
@@ -85,9 +127,13 @@ const Grandmasters = () => {
     fetchGMs();
   }, []);
 
-  const totalPages = Math.ceil(gms.length / ITEMS_PER_PAGE);
+  const filteredGMs = gms.filter((name) =>
+    name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredGMs.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentItems = gms.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const currentItems = filteredGMs.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   const handleClick = (username: string) => {
     navigate(`/player/${username}?page=${currentPage}`);
@@ -100,6 +146,19 @@ const Grandmasters = () => {
   return (
     <Container>
       <Title>♟️ List of Grandmasters</Title>
+      {loading ? (
+        <SkeletonSearchInput />
+      ) : (
+        <SearchInput
+          type="text"
+          placeholder="Search grandmaster..."
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setCurrentPage(1);
+          }}
+        />
+      )}
       {loading ? (
       <Grid>
         {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
